@@ -100,14 +100,16 @@ public class StudyController extends LoginedController{
                     case REMEMBER: {
                         LOGGER.debug("两次点击REMEMBER的次数间隔{}秒", reviewRequest.getInterval());
                         if (reviewRequest.getInterval() < intervalLimit) {
-                            LOGGER.debug("知识点在知识包中第{}次被复习到", stuKnowledgeRela.getReviewCount() + 1);
-                            if (stuKnowledgeRela.getReviewCount() == 0) {
-                                studyService.finishKnowledgeRela(stuKnowledgeRela);
-                            } else {
-                                LOGGER.debug("知识点在第{}次复习次数中第{}被显示", stuKnowledgeRela.getReviewCount() + 1,
-                                        stuKnowledgeRela.getViewCount());
-                                if(stuKnowledgeRela.getViewCount() == 1) {
-                                    LOGGER.debug("知识点已熟记标识为:{}", stuKnowledgeRela.isMemorized());
+                            LOGGER.debug("知识点在第{}次复习次数中第{}被显示", stuKnowledgeRela.getReviewCount() + 1,
+                                    stuKnowledgeRela.getViewCount());
+                            if(reviewRequest.getViewCount() != 1) {
+                                studyService.reviewKnowledge(stuKnowledgeRela);
+                            }else {
+                                LOGGER.debug("知识点在知识包中第{}次被复习到", stuKnowledgeRela.getReviewCount() + 1);
+                                if (stuKnowledgeRela.getReviewCount() == 0) {
+                                    studyService.finishKnowledgeRela(stuKnowledgeRela);
+                                } else {
+                                    LOGGER.debug("知识点熟记标识为:{}", stuKnowledgeRela.isMemorized());
                                     if(stuKnowledgeRela.isMemorized()) {
                                         studyService.finishKnowledgeRela(stuKnowledgeRela);
                                     }else {
@@ -116,8 +118,6 @@ public class StudyController extends LoginedController{
                                         stuKnowledgeRela.setMemorized(true);
                                         studyService.reviewKnowledge(stuKnowledgeRela, 1);
                                     }
-                                }else {
-                                    studyService.reviewKnowledge(stuKnowledgeRela);
                                 }
                             }
                         }else {
