@@ -1,0 +1,18 @@
+spring:
+  main:
+    banner-mode: 'off'
+  mail:
+    host: smtp.163.com
+    port: 25
+    username: davidhan_hly
+    password: 84268426&wayyD
+    protocol: smtp
+
+monitor:
+  targets: http://127.0.0.1:8888/aabbcc
+  mail-template:
+    from: davidhan_hly@163.com
+    subject: 监控程序
+    to:
+      - davidhan_hly@163.com
+    text: target[{0}]访问失败, status[{1}]
