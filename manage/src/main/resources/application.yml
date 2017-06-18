@@ -24,3 +24,8 @@ file:
     path: /Users/scott/Github/rapids/management/static/img/upload/
   download:
     url: http://localhost/static/img/upload/
+
+management:
+  context-path: /act
+endpoints:
+  actuator.enabled: true

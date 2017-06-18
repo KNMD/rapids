@@ -46,3 +46,7 @@ rapids:
       initialSize: 3
       minIdle: 3
       maxActive: 30
+management:
+  context-path: /act
+endpoints:
+  actuator.enabled: true
