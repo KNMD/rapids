@@ -45,18 +45,23 @@ public class Application implements CommandLineRunner{
                 HttpResponse response = client.execute(new HttpGet(target));
                 int status = response.getStatusLine().getStatusCode();
                 if(status != HttpStatus.SC_OK) {
-                    SimpleMailMessage simpleMailMessage = new SimpleMailMessage(this.mailTemplate);
-                    String newText = MessageFormat.format(simpleMailMessage.getText(), target, String.valueOf(status));
-                    simpleMailMessage.setText(newText);
-                    javaMailSender.send(simpleMailMessage);
+                    sendMail(target, status);
                 }else {
                     LOGGER.info("monitor access OK, target: {}, status: {}", target, status);
                 }
             } catch (IOException e) {
                 LOGGER.error("monitor execute error", e);
+                sendMail(target, 0);
             }
         });
+    }
 
+    private void sendMail(String target, int status) {
+        LOGGER.info("send mail to admins");
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage(this.mailTemplate);
+        String newText = MessageFormat.format(simpleMailMessage.getText(), target, String.valueOf(status));
+        simpleMailMessage.setText(newText);
+        javaMailSender.send(simpleMailMessage);
     }
 
 }
