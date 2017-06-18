@@ -15,8 +15,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import sun.plugin2.message.Message;
-
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
